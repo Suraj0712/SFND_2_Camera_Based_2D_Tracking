@@ -101,3 +101,81 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool b
         cv::waitKey(0);
     }
 }
+
+void detKeypointsHarris(vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool bVis) 
+{
+	int blockSize = 2;
+	int apertureSize = 3;
+	int minResponse = 100;
+	double k = 0.04;
+
+	double t = (double)cv::getTickCount();
+	cv::Mat dst, dstNorm, dstNormScaled;
+	dst = cv::Mat::zeros(img.size(), CV_32FC1);
+	cv::cornerHarris(img, dst, blockSize, apertureSize, k, cv::BORDER_DEFAULT);
+	cv::normalize(dst, dstNorm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+	cv::convertScaleAbs(dstNorm, dstNormScaled);
+
+
+	for (int r = 0; r < dstNorm.rows; r++) 
+    {
+		for (int c = 0; c < dstNorm.cols; c++) 
+        {
+			cv::KeyPoint point(c, r, 2 * apertureSize, dstNorm.at<float>(r, c));
+			keypoints.push_back(point);
+		}
+	}
+	t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+	cout << "Harris corner detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
+
+	if (bVis) 
+    {
+		cv::Mat visImage = img.clone();
+		cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+		string windowName = "Harris Corner Detector Results";
+		cv::namedWindow(windowName, 6);
+		imshow(windowName, visImage);
+		cv::waitKey(0);
+	}
+}
+
+
+void detKeypointsModern(vector<cv::KeyPoint> &keypoints, cv::Mat &img, string detectorType, bool bVis) {
+	cv::Ptr<cv::FeatureDetector> detector;
+	if (detectorType.compare("FAST") == 0) 
+    {
+		detector = cv::FastFeatureDetector::create();
+	} 
+    else if (detectorType.compare("BRISK") == 0) 
+    {
+		detector = cv::BRISK::create();
+	} 
+    else if (detectorType.compare("ORB") == 0) 
+    {
+		detector = cv::ORB::create();
+	} 
+    else if (detectorType.compare("AKAZE") == 0) 
+    {
+		detector = cv::AKAZE::create();
+	} 
+    else if (detectorType.compare("SIFT") == 0) 
+    {
+		// detector = cv::xfeatures2d::SIFT::create();
+        // SIFT removed from nonfree.hpp
+	}
+
+	double t = (double)cv::getTickCount();
+	detector->detect(img, keypoints);
+	t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+	cout << detectorType << " detector with n = " << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
+
+	if (bVis) {
+		cv::Mat visImage = img.clone();
+		cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+		string windowName = detectorType + " Detector Results";
+		cv::namedWindow(windowName, 6);
+		imshow(windowName, visImage);
+		cv::waitKey(0);
+	}
+}
+

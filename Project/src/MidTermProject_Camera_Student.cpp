@@ -23,7 +23,7 @@ using namespace std;
 int main(int argc, const char *argv[])
 {
 
-    /* INIT VARIABLES AND DATA STRUCTURES */
+    /* INIT VARIABLES AND DATA STRUCTURES  */
 
     // data location
     string dataPath = "../";

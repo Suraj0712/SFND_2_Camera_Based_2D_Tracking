@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <deque>
 #include <cmath>
 #include <limits>
 #include <opencv2/core.hpp>
@@ -36,8 +37,11 @@ int main(int argc, const char *argv[])
     int imgFillWidth = 4;  // no. of digits which make up the file index (e.g. img-0001.png)
 
     // misc
-    int dataBufferSize = 2;       // no. of images which are held in memory (ring buffer) at the same time
-    vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
+    int dataBufferSize = 4;       // no. of images which are held in memory (ring buffer) at the same time
+    // vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
+    deque<DataFrame> dataBuffer;
+
+
     bool bVis = false;            // visualize results
 
     /* MAIN LOOP OVER ALL IMAGES */
@@ -62,10 +66,23 @@ int main(int argc, const char *argv[])
         // push image into data frame buffer
         DataFrame frame;
         frame.cameraImg = imgGray;
-        dataBuffer.push_back(frame);
 
+        cout << "Deque size: " << dataBuffer.size() << endl;
+        if(dataBuffer.size() < dataBufferSize)
+        {
+            // cout << "Pushing element \n";
+            dataBuffer.push_back(frame);
+        }
+        else
+        {
+            // cout << "Poping element \n";
+            dataBuffer.pop_front();
+            // cout << "element push from else\n";
+            dataBuffer.push_back(frame);
+        }
         //// EOF STUDENT ASSIGNMENT
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
+        
 
         /* DETECT IMAGE KEYPOINTS */
 
@@ -178,7 +195,7 @@ int main(int argc, const char *argv[])
             }
             bVis = false;
         }
-
+        cout<<"Loop finished \n\n";
     } // eof loop over all images
 
     return 0;

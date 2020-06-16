@@ -38,7 +38,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
     else if (selectorType.compare("SEL_KNN") == 0)
     { // k nearest neighbors (k=2)
         vector<vector<cv::DMatch>> knnMatches;
-    	matcher->knnMatch(descSource, descRef, knnMatches, 2);
+    	matcher->knnMatch(descSource, deef, knnMatches, 2);
     	const double threshold = 0.8;
     	for (auto m = knnMatches.begin(); m != knnMatches.end(); m++) 
         {

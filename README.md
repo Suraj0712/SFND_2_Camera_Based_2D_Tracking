@@ -4,20 +4,21 @@
 
 ## Project 02: 2D Feature Tracking
 
-<img src="images/keypoints.png" width="820" height="248" />
+<img src="Project/images/keypoints.png" width="820" height="248" />
 
 The goal of this project is to develop a software stack using the OpenCV library, which can track the features in the successive frames coming from the camera of the car. In this project, I have explored different kinds of Feature Detectors, Descriptors, and Matching algorithms. Eventually, I will also do a comprehensive analysis of Descriptors and Feature Detectors based on performance(time), quality(robustness), and quantity of features. The high level of understanding of the project is as follows.
 
 
 ```
-* First, we will load images and store in ring buffer fashion using data structure which is optimal for the task
-* Then, we will do feature extraction using SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT
-* The next part is about descriptor extraction which we will carry out using BRIEF, BRISK, ORB, FREAK, and SIFT
-* Fourth step is to do matching using brute force and also the FLANN approach 
-* Finally, we will do the analysis of different descriptor, detector and matching algorithms 
+1 First, we will load images and store in ring buffer fashion using data structure which is optimal for the task
+2 Then, we will do feature extraction using SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT
+3 The next part is about descriptor extraction which we will carry out using BRIEF, BRISK, ORB, FREAK, and SIFT
+4 Fourth step is to do matching using brute force and also the FLANN approach 
+5 Finally, we will do the analysis of different descriptor, detector and matching algorithms 
 ```
 
 ![alt txt](/Project/images/Matching.png)
+
 
 ### Dependencies for Running Locally
 * cmake >= 2.8
@@ -33,6 +34,32 @@ The goal of this project is to develop a software stack using the OpenCV library
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
+
+
+### Basic Build Instructions
+
+#### 1. First of all, clone this repo:
+```
+$ git clone git@github.com:Suraj0712/SFND_2_Camera_Based_2D_Tracking.git
+```
+
+#### 2. Run Quiz
+```
+$ cd <Path_to_quiz_directory>
+$ makdir build && cd build
+$ cmake ..
+$ make
+$ ./<executable_name>
+```
+#### 3. Run Project
+```
+$ cd <directory_where_you_have_cloned_the_repo>/SFND_2_Camera_Based_2D_Tracking/Project/
+$ makdir build && cd build
+$ cmake ..
+$ make
+$ ./<executable_name>
+```
+
 
 ### Directory Structure
 ```
@@ -133,31 +160,8 @@ The goal of this project is to develop a software stack using the OpenCV library
 └── README.md
 ```
 
-### Basic Build Instructions
-
-#### 1. First of all, clone this repo:
-```
-$ git clone git@github.com:Suraj0712/SFND_2_Camera_Based_2D_Tracking.git
-```
-
-#### 2. Run Quiz
-```
-$ cd <Path_to_quiz_directory>
-$ makdir build && cd build
-$ cmake ..
-$ make
-$ ./<executable_name>
-```
-#### 3. Run Project
-```
-$ cd <directory_where_you_have_cloned_the_repo>/SFND_2_Camera_Based_2D_Tracking/Project/
-$ makdir build && cd build
-$ cmake ..
-$ make
-$ ./<executable_name>
-```
-
 ### Project Rubric
+
 #### Data Buffer
 
 ##### MP.1 Data Buffer Optimization
@@ -208,9 +212,9 @@ $ ./<executable_name>
 
 ### Benchmark
 
-#### Number of keypoints detected in images
+#### 1. Number of keypoints detected in images
 
-[Complete results at](/Project/Observations/7_DetectorVsKeypoints.csv)
+[Click here to see the complete results](/Project/Observations/7_DetectorVsKeypoints.csv)
 
 |Detector |Image1|Image2|Image3|Image4|Image5|Image6|Image7|Image8|Image9|Image10|
 |---------|------|------|------|------|------|------|------|------|------|-------|
@@ -222,9 +226,9 @@ $ ./<executable_name>
 |AKAZE    | 162  |157   |159   |154   |162   |163   |173   |175   |175   |175    |
 |SIFT     | 138  |132   |124   |137   |134   |140   |137   |148   |159   |137    |
 
-#### Number of keypoint matches in succesive frames
+#### 2. Number of keypoint matches in succesive frames
 
-[Complete results at](/Project/Observations/8_Detector_Descriptor_Matches.csv)
+[Click here to see the complete results](/Project/Observations/8_Detector_Descriptor_Matches.csv)
 
 |Detector |Descriptor|Img1-Img2 |Img2-Img3       |Img3-Img4|Img4-Img5|Img5-Img6|
 |---------|----------|----------|----------------|---------|---------|---------|
@@ -264,9 +268,9 @@ $ ./<executable_name>
 |SIFT     |FREAK     |61        |62              |55       |63       |49       |
 |SIFT     |SIFT      |75        |72              |65       |75       |59       |
 
-#### Key-point Detection and Descriptor Extraction Time Consumption (in ms)
+#### 3. Key-point Detection and Descriptor Extraction Time Consumption (in ms)
 
-[[Complete results at](/Project/Observations/9_DetectorDescriptorTime.csv)
+[Click here to see the complete results](/Project/Observations/9_DetectorDescriptorTime.csv)
 
 |Detector |Descriptor|Average_det_desc|Img2_det        |Img2_des|det_des_2|Img3_det |Img3_des|det_des_3|
 |---------|----------|----------------|----------------|--------|---------|---------|--------|---------|
@@ -305,7 +309,7 @@ $ ./<executable_name>
 |SIFT     |FREAK     |208.4729        |160.963         |45.4526 |206.4156 |160.396  |47.4581 |207.8541 |
 |SIFT     |SIFT      |235.8312        |130.119         |97.1628 |227.2818 |131.569  |96.3781 |227.9471 |
 
-### TOP3 detector/descriptor combinations
+#### 4. TOP3 detector/descriptor combinations
 
 1. FAST + BRIEF
 2. FAST + BRISK
